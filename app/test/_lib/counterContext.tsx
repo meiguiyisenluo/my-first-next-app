@@ -20,10 +20,9 @@ const Context = createContext<ContextType>({
 
 export function ContextProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState(initialState);
+  const value = { state, setState };
 
-  return (
-    <Context.Provider value={{ state, setState }}>{children}</Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export default Context;
