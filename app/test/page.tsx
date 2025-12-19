@@ -1,19 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import type { Dispatch, SetStateAction } from "react";
 
 const ButtonList = ({
-  setCounter,
+  data,
+  onCLickHandler,
 }: {
-  setCounter: Dispatch<SetStateAction<number>>;
+  data: Array<number>;
+  onCLickHandler: (_: number) => void;
 }) => {
   return (
-    <div>
-      {[1, 2, 3].map((_) => (
-        <IncreaseButton key={_} onClick={() => setCounter(_)}></IncreaseButton>
+    <>
+      {data.map((_) => (
+        <IncreaseButton
+          key={_}
+          onClick={() => onCLickHandler(_)}
+        ></IncreaseButton>
       ))}
-    </div>
+    </>
   );
 };
 
@@ -24,11 +28,18 @@ const IncreaseButton = ({ onClick }: { onClick: () => void }) => {
 export default function Test() {
   const [counter, setCounter] = useState(0);
   const doubleCounter = counter * 2;
+
+  const data = [1, 2, 3];
+  const onCLickHandler = (_: number) => {
+    setCounter(_);
+  };
+
   return (
     <div>
       <div>{counter}</div>
       <div>{doubleCounter}</div>
-      <ButtonList setCounter={setCounter}></ButtonList>
+
+      <ButtonList data={data} onCLickHandler={onCLickHandler} />
     </div>
   );
 }
