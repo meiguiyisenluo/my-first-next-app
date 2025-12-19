@@ -1,37 +1,34 @@
 "use client";
-import React, { useState, useRef } from "react";
 
-import Child, { Handler as ChildHandler } from "./_component/child";
-const MemoChild = React.memo(Child, (nextProps, prevProps) => {
-  return nextProps.count === prevProps.count;
-});
-import Child2 from "./_component/child2";
-const MemoChild2 = React.memo(Child2, () => true);
+import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 
-export default function Parent() {
-  console.log("Parent", "render");
-  const [count, setCount] = useState(() => 0);
-  const plus = () => setCount((n) => n + 1);
-  const ChildRef = useRef<null | ChildHandler>(null);
-  const focus = () => {
-    ChildRef.current?.focus();
-  };
+const ButtonList = ({
+  setCounter,
+}: {
+  setCounter: Dispatch<SetStateAction<number>>;
+}) => {
   return (
     <div>
-      <h1>Parent</h1>
-      <div>
-        {count}
-        <br />
-        <button onClick={plus}>plus</button>
-        <br />
-        <button onClick={focus}>focus</button>
-      </div>
+      {[1, 2, 3].map((_) => (
+        <IncreaseButton key={_} onClick={() => setCounter(_)}></IncreaseButton>
+      ))}
+    </div>
+  );
+};
 
-      <hr />
-      <MemoChild ref={ChildRef} count={count} />
+const IncreaseButton = ({ onClick }: { onClick: () => void }) => {
+  return <div onClick={onClick}>plus</div>;
+};
 
-      <hr />
-      <MemoChild2 />
+export default function Test() {
+  const [counter, setCounter] = useState(0);
+  const doubleCounter = counter * 2;
+  return (
+    <div>
+      <div>{counter}</div>
+      <div>{doubleCounter}</div>
+      <ButtonList setCounter={setCounter}></ButtonList>
     </div>
   );
 }

@@ -1,0 +1,6 @@
+{
+  "AICoder.ChatModelInterface": "湛卢",
+  "AICoder.CompletionModelInterface": "湛卢",
+  "AICoder.AutoTriggerCompletion": false,
+  "AICoder.ManualTriggerCompletion": true
+}
